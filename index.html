@@ -1,58 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Time-Off Manager Login</title>
+  <title>Sodexo Time-Off Manager Login</title>
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
 
-<div class="login-container">
-  <h2>Manager Login</h2>
+<body class="login-bg">
+  <div class="login-container">
+    <h2>Manager Login</h2>
 
-  <label>Select Location</label>
-  <select id="locationSelect">
-      <option value="C4">C4</option>
-      <option value="Appalachian">Appalachian</option>
-      <option value="CIW">CIW</option>
-      <option value="Hinman">Hinman</option>
-      <option value="Food Trucks">Food Trucks</option>
-      <option value="Einstein">Einstein</option>
-      <option value="Library">Library</option>
-      <option value="Dunkin">Dunkin</option>
-      <option value="Market Place">Market Place</option>
-      <option value="Health Sciences">Health Sciences</option>
-      <option value="Starbucks">Starbucks</option>
-      <option value="Garbanzos">Garbanzos</option>
-  </select>
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
 
-  <label>Manager Email</label>
-  <input type="email" id="emailInput" placeholder="Enter manager email" />
+    <button onclick="loginManager()">Login</button>
 
-  <button onclick="login()">Login</button>
+    <p class="note">Sodexo Internal Manager Portal</p>
+  </div>
 
-</div>
-
-<script>
-function login() {
-    const email = document.getElementById("emailInput").value.trim();
-    const loc = document.getElementById("locationSelect").value;
-
-    if (!email) {
-        alert("Enter your manager email");
-        return;
-    }
-
-    if (email.toLowerCase() !== "mgroski@binghamton.edu") {
-        alert("Unauthorized email");
-        return;
-    }
-
-    localStorage.setItem("managerEmail", email);
-    localStorage.setItem("location", loc);
-
-    window.location.href = "dashboard.html"; 
-}
-</script>
-
+  <script src="credentials.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
