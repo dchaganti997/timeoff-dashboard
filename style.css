@@ -1,142 +1,52 @@
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: #f3f6fa;
-    margin: 0;
-    padding: 0;
+
+body { margin:0; font-family:Arial; }
+
+.loginBody {
+  display:flex; justify-content:center; align-items:center;
+  height:100vh; background:#f4f7fc;
 }
 
-/* HEADER */
-.header {
-    background: #002f6c; /* Sodexo dark blue */
-    color: white;
-    padding: 18px;
-    text-align: center;
-    font-size: 22px;
-    font-weight: 600;
+.loginCard {
+  width:350px; padding:30px; background:white;
+  border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,.15);
+  text-align:center;
 }
 
-/* LOGIN PAGE */
-.login-container {
-    max-width: 420px;
-    margin: 50px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
+.logo { width:140px; margin-bottom:20px; }
+
+.inputBox {
+  width:100%; padding:12px; margin:8px 0;
+  border-radius:8px; border:1px solid #ccc; font-size:15px;
 }
 
-.login-container h2 {
-    text-align: center;
-    color: #002f6c;
+.loginBtn {
+  width:100%; padding:12px; background:#e60028; color:white;
+  border:none; border-radius:8px; cursor:pointer; font-size:16px;
 }
 
-input, select {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border-radius: 6px;
-    border: 1px solid #ddd;
-    font-size: 15px;
+.errorMsg { color:red; margin-top:10px; }
+
+.dashHeader {
+  background:#001e62; padding:15px; color:white;
+  display:flex; align-items:center; gap:15px;
 }
 
-button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    color: white;
-    background: #e2231a; /* Sodexo red */
-    border-radius: 6px;
-    font-size: 17px;
-    cursor: pointer;
+.logoSmall { width:120px; }
+
+.filtersBox {
+  background:white; padding:15px; margin:15px;
+  border-radius:12px; box-shadow:0 3px 15px rgba(0,0,0,.1);
 }
 
-button:hover {
-    opacity: 0.85;
+.applyBtn, .resetBtn, .approveBtn, .rejectBtn {
+  padding:8px 14px; margin-left:6px;
+  border:none; border-radius:8px; cursor:pointer;
 }
 
-/* DASHBOARD */
-.filter-panel {
-    display: flex;
-    gap: 20px;
-    padding: 15px;
-    background: white;
-    margin: 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+.applyBtn { background:#005BBB; color:white; }
+.resetBtn { background:#999; color:white; }
+.approveBtn { background:#28a745; color:white; }
+.rejectBtn { background:#dc3545; color:white; }
 
-.table-container {
-    padding: 15px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-th {
-    background: #002f6c;
-    color: white;
-    padding: 12px;
-    text-align: left;
-}
-
-td {
-    padding: 12px;
-    border-bottom: 1px solid #eee;
-}
-
-.statusBadge {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 12px;
-    color: white;
-}
-
-.statusBadge.Pending {
-    background: orange;
-}
-
-.statusBadge.Approved {
-    background: green;
-}
-
-.statusBadge.Rejected {
-    background: red;
-}
-
-textarea {
-    width: 100%;
-    padding: 6px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-}
-
-.actionBtn {
-    padding: 6px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    width: 80px;
-    border: none;
-    border-radius: 6px;
-    color: white;
-}
-
-.approveBtn {
-    background: #00793e;
-}
-
-.rejectBtn {
-    background: #d11a2a;
-}
-
-.logout-btn {
-    background: #444;
-    padding: 10px 20px;
-    float: right;
-    margin-right: 15px;
-    border-radius: 5px;
-}
+.styledTable { width:100%; border-collapse:collapse; margin:15px; background:white; }
+.styledTable th, .styledTable td { padding:12px; border-bottom:1px solid #ddd; }
