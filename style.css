@@ -1,89 +1,116 @@
 body {
-    background: #f4f4f4;
-    font-family: Arial;
+    font-family: Arial, sans-serif;
+    background: #f5f7fa;
     margin: 0;
-    padding: 0;
 }
 
-.login-container {
-    max-width: 350px;
-    background: white;
-    margin: 70px auto;
-    padding: 25px;
+/* LOGIN PAGE */
+.loginBody {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loginCard {
+    background: #fff;
+    padding: 30px;
+    width: 350px;
     border-radius: 12px;
-    box-shadow: 0 0 10px #ccc;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
 }
 
-.login-container input, select {
+.loginCard h2 {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.loginCard input, .loginCard select {
     width: 100%;
     padding: 10px;
+    margin: 8px 0 12px;
+}
+
+.loginCard button {
+    width: 100%;
+    padding: 12px;
+    background: #0066ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.error {
+    color: red;
     margin-top: 10px;
 }
 
-.login-container button {
-    width: 100%;
-    background: #0066ff;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 6px;
-    margin-top: 15px;
-}
-
-.top-bar {
-    background: #222;
-    color: white;
-    padding: 15px;
+/* DASHBOARD */
+.topBar {
+    background: white;
+    padding: 15px 20px;
     display: flex;
     justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logoutBtn {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
 }
 
 .filters {
-    padding: 10px;
-    background: white;
-    margin: 10px;
-    border-radius: 6px;
-    display: flex;
-    gap: 10px;
+    margin: 20px;
+}
+
+.filters select,
+.filters input,
+.filters button {
+    margin-right: 10px;
+    padding: 8px 12px;
+}
+
+.tableContainer {
+    margin: 20px;
 }
 
 table {
     width: 100%;
-    background: white;
-    margin-top: 10px;
     border-collapse: collapse;
+    background: white;
 }
 
-th, td {
+table th, table td {
     padding: 10px;
-    border: 1px solid #ddd;
-}
-
-.statusBadge {
-    padding: 4px 8px;
-    border-radius: 6px;
-    color: white;
+    border-bottom: 1px solid #eee;
 }
 
 .statusBadge.Pending {
-    background: orange;
+    color: orange;
 }
-
 .statusBadge.Approved {
-    background: green;
+    color: green;
 }
-
 .statusBadge.Rejected {
-    background: red;
+    color: red;
 }
 
 .actionBtn {
-    padding: 7px 10px;
-    border: none;
-    color: white;
+    padding: 6px 10px;
     border-radius: 6px;
+    border: none;
     cursor: pointer;
 }
 
-.approveBtn { background: #0a8f00; }
-.rejectBtn  { background: #b30000; }
+.approveBtn {
+    background: #22bb33;
+    color: white;
+}
+
+.rejectBtn {
+    background: #cc0000;
+    color: white;
+}
