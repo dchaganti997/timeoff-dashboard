@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Sodexo Time-Off Manager Login</title>
-  <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<title>Time-Off Manager Login</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="login-bg">
-  <div class="login-container">
+<body class="loginBody">
+
+<div class="loginCard">
     <h2>Manager Login</h2>
 
-    <input id="username" type="text" placeholder="Username">
-    <input id="password" type="password" placeholder="Password">
+    <label>Location</label>
+    <select id="location">
+        <option value="">Select Location</option>
+        <option>C4</option>
+        <option>Appalachian</option>
+        <option>CIW</option>
+        <option>Hinman</option>
+        <option>Food Trucks</option>
+        <option>Einstein</option>
+        <option>Library</option>
+        <option>Dunkin</option>
+        <option>Market Place</option>
+        <option>Health Sciences</option>
+        <option>Starbucks</option>
+        <option>Garbanzos</option>
+    </select>
 
-    <button onclick="loginManager()">Login</button>
+    <label>Username</label>
+    <input type="text" id="username" placeholder="Enter Username">
 
-    <p class="note">Sodexo Internal Manager Portal</p>
-  </div>
+    <label>Password</label>
+    <input type="password" id="password" placeholder="Enter Password">
 
-  <script src="credentials.js"></script>
-  <script src="login.js"></script>
+    <button onclick="login()">Login</button>
+
+    <p id="loginError" class="error"></p>
+</div>
+
+<script src="login.js"></script>
 </body>
 </html>
