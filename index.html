@@ -1,59 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Time-Off Admin Dashboard</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sodexo Time-Off Login</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 
-<body>
-    <div class="container">
+<body class="login-body">
 
-        <h1>Time-Off Admin Dashboard</h1>
-        <p class="small">
-            Connected to Google Apps Script backend<br>
-        </p>
+<div class="login-container">
+    <h2 class="login-title">Sodexo Time-Off Manager Login</h2>
 
-        <!-- FILTERS -->
-        <div class="filters">
-            <select id="statusFilter">
-                <option value="all">All</option>
-                <option value="Pending">Pending</option>
-                <option value="Approved">Approved</option>
-                <option value="Rejected">Rejected</option>
-            </select>
+    <div class="login-box">
 
-            <input type="date" id="fromDate">
-            <input type="date" id="toDate">
+        <!-- LOCATION DROPDOWN -->
+        <label class="login-label">Select Location</label>
+        <select id="location" class="login-input">
+            <option value="">-- Select Location --</option>
+            <option>C4</option>
+            <option>Appalachian</option>
+            <option>CIW</option>
+            <option>Hinman</option>
+            <option>Food Trucks</option>
+            <option>Einstein</option>
+            <option>Library</option>
+            <option>Dunkin</option>
+            <option>Market Place</option>
+            <option>Health Sciences</option>
+            <option>Starbucks</option>
+            <option>Garbanzos</option>
+        </select>
 
-            <button onclick="applyFilters()">Apply</button>
-            <button onclick="resetFilters()">Reset</button>
-        </div>
+        <!-- EMAIL LOGIN -->
+        <label class="login-label">Manager Email</label>
+        <input id="email" type="email" class="login-input" placeholder="example@binghamton.edu" />
 
-        <!-- TABLE -->
-        <table id="requestTable">
-            <thead>
-                <tr>
-                    <th>Employee ID</th>
-                    <th>Name / Email</th>
-                    <th>Dates</th>
-                    <th>Type</th>
-                    <th>Comment</th>
-                    <th>Status</th>
-                    <th>Manager</th>
-                    <th>Decision</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody">
-                <tr><td colspan="10">Loading…</td></tr>
-            </tbody>
-        </table>
+        <button onclick="login()" class="login-btn">Login</button>
 
-        <button onclick="loadRows()" class="reloadBtn">Reload</button>
+        <p id="loginError" class="login-error"></p>
     </div>
+</div>
 
 <script src="app.js"></script>
+
 </body>
 </html>
