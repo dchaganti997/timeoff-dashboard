@@ -1,29 +1,106 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS-A6B_OpqyxDwqG7swgJb-4tCZcaFEvNwYf5T16HptLm4LMaLD7G2zJM2EKPzgw/exec";
 const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2";
 
-function initDashboard() {
-    const token = localStorage.getItem("sessionToken");
-    const location = localStorage.getItem("location");
-    const username = localStorage.getItem("username");
+// MANAGER CREDENTIALS
+const MANAGERS = {
+    "c4_manager": { password: "C4admin@2025", locations: ["C4"] },
+    "app_manager": { password: "App@2025", locations: ["Appalachian"] },
+    "ciw_manager": { password: "CIW@2025", locations: ["CIW"] },
+    "hinman_manager": { password: "Hinman@2025", locations: ["Hinman"] },
+    "food_manager": { password: "Food@2025", locations: ["Food Trucks"] },
 
-    if (!token || !location || !username) {
+    // SUPER ADMIN
+    "deepak": { password: "Deepak@2025", locations: ["all"] }
+};
+
+// LOGIN UI: Load allowed locations
+function checkUsername() {
+    const user = document.getElementById("username").value.trim().toLowerCase();
+    const locSelect = document.getElementById("location");
+
+    if (!MANAGERS[user]) {
+        locSelect.innerHTML = "<option>Invalid username</option>";
+        locSelect.disabled = true;
+        return;
+    }
+
+    const allowed = MANAGERS[user].locations;
+    locSelect.disabled = false;
+    locSelect.innerHTML = "";
+
+    if (allowed.includes("all")) {
+        Object.keys(SHEETS).forEach(loc => {
+            locSelect.innerHTML += `<option>${loc}</option>`;
+        });
+    } else {
+        allowed.forEach(loc => {
+            locSelect.innerHTML += `<option>${loc}</option>`;
+        });
+    }
+}
+
+// LOGIN
+function login() {
+    const u = document.getElementById("username").value.trim().toLowerCase();
+    const p = document.getElementById("password").value;
+    const loc = document.getElementById("location").value;
+
+    if (!MANAGERS[u]) {
+        showError("Invalid username");
+        return;
+    }
+    if (MANAGERS[u].password !== p) {
+        showError("Incorrect password");
+        return;
+    }
+
+    localStorage.setItem("manager", u);
+    localStorage.setItem("location", loc);
+
+    window.location.href = "dashboard.html";
+}
+
+function showError(msg) {
+    document.getElementById("loginError").innerText = msg;
+}
+
+// DASHBOARD
+const SHEETS = {
+  "C4": "1J99tJNmQQWSibI-tyaU9LeFMfcev4FKY3ZZW6pUOI-c",
+  "Appalachian": "18SCtJHCAfG7x1f3TWhv6FyekeyyGpaOyI9K1civPYM0",
+  "CIW": "17uckeJG2gIXdNRlEZVmEKa2cjEsZNAF2Lhy8qoutIXA",
+  "Hinman": "1J3g3mKkCc2vDLiA_NQdnutitWJlK_MU7uonMEht6asE",
+  "Food Trucks": "1ADdVHSb3wh33MzZ0-1JfImRbQt6lMDm0VNJgucOq7Qc",
+  "Einstein": "1cV8CYmBjySLM3aV3t6HqfXn1cgF8qOMw_yo7-QYHaHA",
+  "Library": "1zKjFZilK13iVtrTKC7IpEt_x0BjKEn2uG71aqV_tjpg",
+  "Dunkin": "1XmGbySoSovhhsFg_JInB2FWghLEaOdDik15nsp7ydYE",
+  "Market Place": "1zBTXaGcpK0tGQ1RhOLl5REvtRtNMqBk61D99u62VcIY",
+  "Health Sciences": "1JIeX44zeI2bB8PslvUw6oMSrUK6HDBbUHkh786gb_LI",
+  "Starbucks": "1LR35Td_F4avhBa2g9VhDCqez-n5zy4vnHIEF6DdSIjQ",
+  "Garbanzos": "1LBPkdTv_hPcvEDWLCRzVjP7nvHV733sSSglT63nSkx8"
+};
+
+function initDashboard() {
+    const manager = localStorage.getItem("manager");
+    const location = localStorage.getItem("location");
+
+    if (!manager || !location) {
         window.location.href = "index.html";
         return;
     }
 
-    document.getElementById("titleLocation").innerText =
-        `Dashboard — ${location}`;
-
+    document.getElementById("titleLocation").innerText = location;
     loadRows();
 }
 
+// LOAD ROWS
 async function loadRows() {
-    const token = localStorage.getItem("sessionToken");
-    const location = localStorage.getItem("location");
+    document.getElementById("tableBody").innerHTML = `<tr><td colspan="10">Loading…</td></tr>`;
 
+    const location = localStorage.getItem("location");
     const filters = {};
 
-    const url = `${SCRIPT_URL}?action=getRows&token=${API_TOKEN}&sessionToken=${token}&location=${encodeURIComponent(location)}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+    const url = `${SCRIPT_URL}?action=getRows&token=${API_TOKEN}&location=${location}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
 
     const res = await fetch(url);
     const data = await res.json();
@@ -31,19 +108,16 @@ async function loadRows() {
     populateTable(data.rows);
 }
 
+// FILTER APPLY
 function applyFilters() {
-    const token = localStorage.getItem("sessionToken");
-    const location = localStorage.getItem("location");
-
     const filters = {
         status: document.getElementById("statusFilter").value,
         from: document.getElementById("fromDate").value,
         to: document.getElementById("toDate").value
     };
 
-    const url = `${SCRIPT_URL}?action=getRows&token=${API_TOKEN}&sessionToken=${token}&location=${encodeURIComponent(location)}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
-
-    document.getElementById("tableBody").innerHTML = `<tr><td colspan="10">Loading…</td></tr>`;
+    const location = localStorage.getItem("location");
+    const url = `${SCRIPT_URL}?action=getRows&token=${API_TOKEN}&location=${location}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
 
     fetch(url)
         .then(r => r.json())
@@ -57,6 +131,7 @@ function resetFilters() {
     loadRows();
 }
 
+// TABLE RENDER
 function populateTable(rows) {
     const tb = document.getElementById("tableBody");
     tb.innerHTML = "";
@@ -68,6 +143,7 @@ function populateTable(rows) {
 
     rows.forEach(r => {
         const tr = document.createElement("tr");
+
         const dates = `${new Date(r.startDate).toDateString()} → ${new Date(r.endDate).toDateString()}`;
 
         tr.innerHTML = `
@@ -88,24 +164,19 @@ function populateTable(rows) {
     });
 }
 
+// UPDATE STATUS
 function updateStatus(requestId, status) {
     const note = document.getElementById(`note_${requestId}`).value;
 
-    const token = localStorage.getItem("sessionToken");
+    const payload = [{
+        requestId,
+        status,
+        managerNote: note
+    }];
+
     const location = localStorage.getItem("location");
 
-    const payload = {
-        sessionToken: token,
-        location,
-        action: "setDecision",
-        decisions: [{
-            requestId,
-            status,
-            managerNote: note
-        }]
-    };
-
-    fetch(`${SCRIPT_URL}?token=${API_TOKEN}&action=setDecision`, {
+    fetch(`${SCRIPT_URL}?action=setDecision&token=${API_TOKEN}&location=${location}`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: { "Content-Type": "application/json" }
