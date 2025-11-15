@@ -1,37 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Sodexo Time-Off Login</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+    <title>Manager Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="loginBody">
-  <div class="loginCard">
-    <div class="loginHeader">
-      <div class="logoCircle">
-        <span class="logoText">S</span>
-      </div>
-      <div>
-        <h2>Sodexo Time-Off Portal</h2>
-        <p>Binghamton University Dining</p>
-      </div>
-    </div>
+<body>
+
+<div class="login-box">
+    <h2>Manager Login</h2>
 
     <label>Username</label>
-    <input id="username" class="inputBox" placeholder="e.g. c4_manager" oninput="onUsernameChange()">
-
-    <label>Location</label>
-    <select id="location" class="inputBox" disabled>
-      <option>Select username first</option>
-    </select>
+    <input id="username" type="text">
 
     <label>Password</label>
-    <input id="password" type="password" class="inputBox" placeholder="Password">
+    <input id="password" type="password">
 
-    <button onclick="login()" class="primaryBtn">Login</button>
+    <label>Location</label>
+    <select id="location">
+        <option value="C4">C4</option>
+        <option value="Appalachian">Appalachian</option>
+        <option value="CIW">CIW</option>
+        <option value="Hinman">Hinman</option>
+        <option value="Library">Library</option>
+    </select>
 
-    <p id="loginError" class="errorMsg"></p>
-  </div>
+    <button onclick="login()">Login</button>
+
+    <p id="error" class="error"></p>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
