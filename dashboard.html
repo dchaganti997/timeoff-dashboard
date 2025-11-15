@@ -1,48 +1,50 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Time-Off Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+  <title>Sodexo Time-Off Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body onload="initDashboard()">
 
-<div class="top-bar">
-    <h2 id="titleLocation">Dashboard</h2>
-    <button onclick="logout()">Logout</button>
-</div>
+<body>
 
-<div class="filters">
-    <select id="statusFilter">
-        <option value="all">All</option>
-        <option value="Pending">Pending</option>
-        <option value="Approved">Approved</option>
-        <option value="Rejected">Rejected</option>
+  <div class="header">
+    <h2 id="locationTitle"></h2>
+    <button onclick="logout()" class="logoutBtn">Logout</button>
+  </div>
+
+  <div class="filters">
+    <select id="statusFilter" onchange="applyFilters()">
+      <option value="all">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Rejected">Rejected</option>
     </select>
 
-    <input type="date" id="fromDate">
-    <input type="date" id="toDate">
-    <button onclick="applyFilters()">Filter</button>
+    <input type="date" id="fromDate" onchange="applyFilters()">
+    <input type="date" id="toDate" onchange="applyFilters()">
+
     <button onclick="resetFilters()">Reset</button>
-</div>
+  </div>
 
-<table>
+  <table>
     <thead>
-        <tr>
-            <th>Employee ID</th>
-            <th>Name / Email</th>
-            <th>Dates</th>
-            <th>Type</th>
-            <th>Comment</th>
-            <th>Status</th>
-            <th>Manager</th>
-            <th>Note</th>
-            <th>Action</th>
-        </tr>
+      <tr>
+        <th>Employee ID</th>
+        <th>Name / Email</th>
+        <th>Dates</th>
+        <th>Type</th>
+        <th>Comment</th>
+        <th>Status</th>
+        <th>Manager</th>
+        <th>Manager Note</th>
+        <th>Actions</th>
+      </tr>
     </thead>
-    <tbody id="tableBody"></tbody>
-</table>
 
-<script src="app.js"></script>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <script src="app.js"></script>
 
 </body>
 </html>
