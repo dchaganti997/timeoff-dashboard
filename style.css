@@ -1,116 +1,142 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f7fa;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f3f6fa;
     margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+.header {
+    background: #002f6c; /* Sodexo dark blue */
+    color: white;
+    padding: 18px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
 }
 
 /* LOGIN PAGE */
-.loginBody {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+.login-container {
+    max-width: 420px;
+    margin: 50px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
 }
 
-.loginCard {
-    background: #fff;
-    padding: 30px;
-    width: 350px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.loginCard h2 {
-    margin-bottom: 20px;
+.login-container h2 {
     text-align: center;
+    color: #002f6c;
 }
 
-.loginCard input, .loginCard select {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0 12px;
-}
-
-.loginCard button {
+input, select {
     width: 100%;
     padding: 12px;
-    background: #0066ff;
-    color: white;
-    border: none;
-    border-radius: 8px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    font-size: 15px;
 }
 
-.error {
-    color: red;
-    margin-top: 10px;
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    color: white;
+    background: #e2231a; /* Sodexo red */
+    border-radius: 6px;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
 }
 
 /* DASHBOARD */
-.topBar {
-    background: white;
-    padding: 15px 20px;
+.filter-panel {
     display: flex;
-    justify-content: space-between;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    gap: 20px;
+    padding: 15px;
+    background: white;
+    margin: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-.logoutBtn {
-    background: #ff4444;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 15px;
-}
-
-.filters {
-    margin: 20px;
-}
-
-.filters select,
-.filters input,
-.filters button {
-    margin-right: 10px;
-    padding: 8px 12px;
-}
-
-.tableContainer {
-    margin: 20px;
+.table-container {
+    padding: 15px;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
     background: white;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-table th, table td {
-    padding: 10px;
+th {
+    background: #002f6c;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+td {
+    padding: 12px;
     border-bottom: 1px solid #eee;
 }
 
+.statusBadge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    color: white;
+}
+
 .statusBadge.Pending {
-    color: orange;
+    background: orange;
 }
+
 .statusBadge.Approved {
-    color: green;
+    background: green;
 }
+
 .statusBadge.Rejected {
-    color: red;
+    background: red;
+}
+
+textarea {
+    width: 100%;
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
 }
 
 .actionBtn {
     padding: 6px 10px;
-    border-radius: 6px;
-    border: none;
+    font-size: 14px;
     cursor: pointer;
+    width: 80px;
+    border: none;
+    border-radius: 6px;
+    color: white;
 }
 
 .approveBtn {
-    background: #22bb33;
-    color: white;
+    background: #00793e;
 }
 
 .rejectBtn {
-    background: #cc0000;
-    color: white;
+    background: #d11a2a;
+}
+
+.logout-btn {
+    background: #444;
+    padding: 10px 20px;
+    float: right;
+    margin-right: 15px;
+    border-radius: 5px;
 }
