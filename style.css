@@ -1,92 +1,89 @@
 body {
-  padding: 0;
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f7f7f7;
+    background: #f4f4f4;
+    font-family: Arial;
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-  width: 95%;
-  max-width: 1300px;
-  margin: auto;
-  margin-top: 30px;
+.login-container {
+    max-width: 350px;
+    background: white;
+    margin: 70px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px #ccc;
 }
 
-h1 {
-  font-size: 26px;
-  font-weight: 700;
+.login-container input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
 }
 
-.small {
-  font-size: 13px;
-  color: #555;
+.login-container button {
+    width: 100%;
+    background: #0066ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.top-bar {
+    background: #222;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .filters {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-.filters select,
-.filters input {
-  padding: 8px 10px;
-  font-size: 15px;
-}
-
-.filters button {
-  padding: 8px 14px;
-  cursor: pointer;
+    padding: 10px;
+    background: white;
+    margin: 10px;
+    border-radius: 6px;
+    display: flex;
+    gap: 10px;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  background: white;
-  margin-top: 15px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    width: 100%;
+    background: white;
+    margin-top: 10px;
+    border-collapse: collapse;
 }
 
-table th {
-  background: #fafafa;
-  padding: 12px;
-  text-align: left;
-  border-bottom: 2px solid #ddd;
-  font-size: 14px;
-}
-
-table td {
-  padding: 10px;
-  border-bottom: 1px solid #eee;
-  font-size: 14px;
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
 }
 
 .statusBadge {
-  padding: 5px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  display: inline-block;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: white;
 }
 
-.Approved { background: #dff7e5; color: #22803a; }
-.Pending  { background: #fff4d6; color: #b87f00; }
-.Rejected { background: #ffd7d7; color: #b80000; }
+.statusBadge.Pending {
+    background: orange;
+}
+
+.statusBadge.Approved {
+    background: green;
+}
+
+.statusBadge.Rejected {
+    background: red;
+}
 
 .actionBtn {
-  padding: 6px 11px;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 2px;
-  font-size: 12px;
+    padding: 7px 10px;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.approveBtn { background: #1a73e8; }
-.rejectBtn  { background: #d93025; }
-
-.reloadBtn {
-  margin-top: 20px;
-  padding: 8px 16px;
-  cursor: pointer;
-}
+.approveBtn { background: #0a8f00; }
+.rejectBtn  { background: #b30000; }
