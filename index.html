@@ -8,13 +8,28 @@
 </head>
 <body class="loginBody">
   <div class="loginCard">
-    <img src="sodexo_logo.png" class="logo">
-    <h2 class="title">Manager Login</h2>
+    <div class="loginHeader">
+      <div class="logoCircle">
+        <span class="logoText">S</span>
+      </div>
+      <div>
+        <h2>Sodexo Time-Off Portal</h2>
+        <p>Binghamton University Dining</p>
+      </div>
+    </div>
 
-    <input id="username" class="inputBox" placeholder="Username">
+    <label>Username</label>
+    <input id="username" class="inputBox" placeholder="e.g. c4_manager" oninput="onUsernameChange()">
+
+    <label>Location</label>
+    <select id="location" class="inputBox" disabled>
+      <option>Select username first</option>
+    </select>
+
+    <label>Password</label>
     <input id="password" type="password" class="inputBox" placeholder="Password">
 
-    <button onclick="login()" class="loginBtn">Login</button>
+    <button onclick="login()" class="primaryBtn">Login</button>
 
     <p id="loginError" class="errorMsg"></p>
   </div>
