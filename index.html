@@ -1,44 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Time-Off Manager Login</title>
-<link rel="stylesheet" href="styles.css">
+    <title>Sodexo Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="loginBody">
+<body onload="initDashboard()">
 
-<div class="loginCard">
-    <h2>Manager Login</h2>
-
-    <label>Location</label>
-    <select id="location">
-        <option value="">Select Location</option>
-        <option>C4</option>
-        <option>Appalachian</option>
-        <option>CIW</option>
-        <option>Hinman</option>
-        <option>Food Trucks</option>
-        <option>Einstein</option>
-        <option>Library</option>
-        <option>Dunkin</option>
-        <option>Market Place</option>
-        <option>Health Sciences</option>
-        <option>Starbucks</option>
-        <option>Garbanzos</option>
-    </select>
-
-    <label>Username</label>
-    <input type="text" id="username" placeholder="Enter Username">
-
-    <label>Password</label>
-    <input type="password" id="password" placeholder="Enter Password">
-
-    <button onclick="login()">Login</button>
-
-    <p id="loginError" class="error"></p>
+<div class="header">
+    Sodexo Time-Off Dashboard — <span id="titleLocation"></span>
+    <button class="logout-btn" onclick="logout()">Logout</button>
 </div>
 
-<script src="login.js"></script>
+<div class="filter-panel">
+    <div>
+        <label>Status:</label>
+        <select id="statusFilter" onchange="applyFilters()">
+            <option value="all">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Approved">Approved</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+    </div>
+
+    <div>
+        <label>From:</label>
+        <input type="date" id="fromDate" onchange="applyFilters()">
+    </div>
+
+    <div>
+        <label>To:</label>
+        <input type="date" id="toDate" onchange="applyFilters()">
+    </div>
+
+    <button onclick="resetFilters()">Reset</button>
+</div>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Emp ID</th>
+                <th>Name / Email</th>
+                <th>Dates</th>
+                <th>Type</th>
+                <th>Comment</th>
+                <th>Status</th>
+                <th>Manager</th>
+                <th>Note</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
