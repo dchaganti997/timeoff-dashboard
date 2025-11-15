@@ -1,5 +1,5 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS-A6B_OpqyxDwqG7swgJb-4tCZcaFEvNwYf5T16HptLm4LMaLD7G2zJM2EKPzgw/exec";
-const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2";
+const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2"; 
 
 // MULTI-LOCATION SHEET MAP
 const SHEETS = {
