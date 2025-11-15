@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Time-Off Admin Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Time-Off Admin Dashboard</h1>
+        <p class="small">
+            Connected to Google Apps Script backend<br>
+        </p>
+
+        <!-- FILTERS -->
+        <div class="filters">
+            <select id="statusFilter">
+                <option value="all">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+
+            <input type="date" id="fromDate">
+            <input type="date" id="toDate">
+
+            <button onclick="applyFilters()">Apply</button>
+            <button onclick="resetFilters()">Reset</button>
+        </div>
+
+        <!-- TABLE -->
+        <table id="requestTable">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name / Email</th>
+                    <th>Dates</th>
+                    <th>Type</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                    <th>Manager</th>
+                    <th>Decision</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <tr><td colspan="10">Loading…</td></tr>
+            </tbody>
+        </table>
+
+        <button onclick="loadRows()" class="reloadBtn">Reload</button>
+    </div>
+
+<script src="app.js"></script>
+</body>
+</html>
