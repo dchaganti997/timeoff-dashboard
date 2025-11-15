@@ -1,60 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Sodexo Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Sodexo Time-Off Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
 </head>
+<body class="loginBody">
+  <div class="loginCard">
+    <img src="sodexo_logo.png" class="logo">
+    <h2 class="title">Manager Login</h2>
 
-<body onload="initDashboard()">
+    <input id="username" class="inputBox" placeholder="Username">
+    <input id="password" type="password" class="inputBox" placeholder="Password">
 
-<div class="header">
-    Sodexo Time-Off Dashboard — <span id="titleLocation"></span>
-    <button class="logout-btn" onclick="logout()">Logout</button>
-</div>
+    <button onclick="login()" class="loginBtn">Login</button>
 
-<div class="filter-panel">
-    <div>
-        <label>Status:</label>
-        <select id="statusFilter" onchange="applyFilters()">
-            <option value="all">All</option>
-            <option value="Pending">Pending</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
-        </select>
-    </div>
-
-    <div>
-        <label>From:</label>
-        <input type="date" id="fromDate" onchange="applyFilters()">
-    </div>
-
-    <div>
-        <label>To:</label>
-        <input type="date" id="toDate" onchange="applyFilters()">
-    </div>
-
-    <button onclick="resetFilters()">Reset</button>
-</div>
-
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Emp ID</th>
-                <th>Name / Email</th>
-                <th>Dates</th>
-                <th>Type</th>
-                <th>Comment</th>
-                <th>Status</th>
-                <th>Manager</th>
-                <th>Note</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
-</div>
-
-<script src="app.js"></script>
+    <p id="loginError" class="errorMsg"></p>
+  </div>
 </body>
 </html>
