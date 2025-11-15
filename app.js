@@ -76,27 +76,27 @@ function populateTable(rows) {
 function updateStatus(requestId, status) {
     const note = document.getElementById(`note_${requestId}`).value;
 
-    const payload = [{
+    const decisions = [{
         requestId,
         status,
         managerNote: note
     }];
 
-    const url = `${SCRIPT_URL}?action=setDecision&token=${API_TOKEN}`;
+    const url =
+        `${SCRIPT_URL}?action=setDecision` +
+        `&token=${API_TOKEN}` +
+        `&decisions=${encodeURIComponent(JSON.stringify(decisions))}`;
 
-    fetch(url, {
-        method: "POST",
-        body: JSON.stringify(payload),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-    .then(r => r.json())
-    .then(d => {
-        alert("Updated successfully!");
-        loadRows();
-    });
+    fetch(url)
+        .then(r => r.json())
+        .then(d => {
+            console.log("Update response:", d);
+            if (d.error) {
+                alert("Error: " + d.error);
+                return;
+            }
+            alert("Updated successfully!");
+            loadRows(); // reload table
+        })
+        .catch(err => alert("Network error: " + err));
 }
-
-// Load on start
-loadRows();
