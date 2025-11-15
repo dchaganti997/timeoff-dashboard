@@ -1,44 +1,79 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwS-A6B_OpqyxDwqG7swgJb-4tCZcaFEvNwYf5T16HptLm4LMaLD7G2zJM2EKPzgw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMlRApNGSoiZ-HuNAtrpoEPduBdcStUwdFmjDAf2P0CUBuW2E5ESQ2Bori9y6u9JK_/exec";
 const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2";
 
-async function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const location = document.getElementById("location").value.trim();
-    const errorBox = document.getElementById("loginError");
+// get dropdown element
+const ALL_LOCATIONS = [
+  "C4","Appalachian","CIW","Hinman","Food Trucks","Einstein",
+  "Library","Dunkin","Market Place","Health Sciences","Starbucks","Garbanzos"
+];
 
-    errorBox.innerText = "";
+function onUsernameChange() {
+  const u = (document.getElementById('username').value||'').trim().toLowerCase();
+  const locSelect = document.getElementById('location');
+  locSelect.disabled = true;
+  locSelect.innerHTML = "<option>Select username first</option>";
 
-    if (!username || !password || !location) {
-        errorBox.innerText = "All fields are required";
-        return;
-    }
+  if (!u) return;
 
-    const payload = {
-        action: "login",
-        username,
-        password
-    };
-
-    const url = `${SCRIPT_URL}?token=${API_TOKEN}&action=login`;
-
-    const res = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+  // fetch manager login info from backend
+  const url = `${SCRIPT_URL}?token=${API_TOKEN}&action=getManagerInfo&username=${encodeURIComponent(u)}`;
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data.error) {
+        locSelect.innerHTML = `<option>${data.error}</option>`;
+      } else {
+        const allowed = data.locations || [];
+        locSelect.innerHTML = "";
+        if (allowed.includes("all")) {
+          ALL_LOCATIONS.forEach(loc => {
+            locSelect.innerHTML += `<option value="${loc}">${loc}</option>`;
+          });
+        } else {
+          allowed.forEach(loc => {
+            locSelect.innerHTML += `<option value="${loc}">${loc}</option>`;
+          });
+        }
+        locSelect.disabled = false;
+      }
+    })
+    .catch(err => {
+      locSelect.innerHTML = "<option>Error loading</option>";
     });
+}
 
-    const data = await res.json();
+function login() {
+  const u = (document.getElementById('username').value||'').trim().toLowerCase();
+  const p = (document.getElementById('password').value||'');
+  const loc = document.getElementById('location').value;
 
+  const errEl = document.getElementById('loginError');
+  errEl.textContent = "";
+
+  if (!u || !p || !loc) {
+    errEl.textContent = "All fields are required.";
+    return;
+  }
+
+  const payload = { username: u, password: p, location: loc };
+
+  fetch(`${SCRIPT_URL}?token=${API_TOKEN}&action=login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+  .then(res => res.json())
+  .then(data => {
     if (data.error) {
-        errorBox.innerText = data.error;
-        return;
+      errEl.textContent = data.error;
+    } else {
+      localStorage.setItem("sessionToken", data.token);
+      localStorage.setItem("managerUser", u);
+      localStorage.setItem("managerLocation", loc);
+      window.location.href = "dashboard.html";
     }
-
-    // Save session
-    localStorage.setItem("sessionToken", data.token);
-    localStorage.setItem("username", username);
-    localStorage.setItem("location", location);
-
-    window.location.href = "dashboard.html";
+  })
+  .catch(err => {
+    errEl.textContent = "Network error: "+err;
+  });
 }
