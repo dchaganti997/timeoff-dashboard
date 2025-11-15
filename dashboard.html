@@ -2,44 +2,75 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Dashboard</title>
+  <title>Sodexo Time-Off Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="app.js"></script>
 </head>
-<body class="dashBody">
+<body class="dashBody" onload="initDashboard()">
+
   <header class="dashHeader">
-    <img src="sodexo_logo.png" class="logoSmall">
-    <h2 id="dashTitle">Dashboard</h2>
-    <button class="logoutBtn" onclick="logout()">Logout</button>
+    <div class="dashLeft">
+      <div class="logoCircle small">
+        <span class="logoText">S</span>
+      </div>
+      <div>
+        <h1>Time-Off Dashboard</h1>
+        <span id="titleLocation" class="subtitle"></span>
+      </div>
+    </div>
+    <button class="secondaryBtn" onclick="logout()">Logout</button>
   </header>
 
-  <section class="filtersBox">
-    <label>Status:</label>
-    <select id="statusFilter">
-      <option value="all">All</option>
-      <option value="Pending">Pending</option>
-      <option value="Approved">Approved</option>
-      <option value="Rejected">Rejected</option>
-    </select>
+  <section class="filtersPanel">
+    <div class="filterItem">
+      <label>Status</label>
+      <select id="statusFilter" onchange="applyFilters()">
+        <option value="all">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+      </select>
+    </div>
 
-    <label>From:</label>
-    <input type="date" id="fromDate">
+    <div class="filterItem">
+      <label>From</label>
+      <input type="date" id="fromDate" onchange="applyFilters()">
+    </div>
 
-    <label>To:</label>
-    <input type="date" id="toDate">
+    <div class="filterItem">
+      <label>To</label>
+      <input type="date" id="toDate" onchange="applyFilters()">
+    </div>
 
-    <button class="applyBtn" onclick="applyFilters()">Apply</button>
-    <button class="resetBtn" onclick="resetFilters()">Reset</button>
+    <div class="filterItem">
+      <label>&nbsp;</label>
+      <div>
+        <button class="primaryBtn small" onclick="applyFilters()">Apply</button>
+        <button class="secondaryBtn small" onclick="resetFilters()">Reset</button>
+      </div>
+    </div>
   </section>
 
-  <table class="styledTable">
-    <thead>
-      <tr>
-        <th>ID</th><th>Name</th><th>Dates</th><th>Type</th>
-        <th>Comment</th><th>Status</th><th>Manager</th><th>Note</th><th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="tableBody"></tbody>
-  </table>
+  <section class="tableWrapper">
+    <table class="requestsTable">
+      <thead>
+        <tr>
+          <th>Emp ID</th>
+          <th>Employee</th>
+          <th>Dates</th>
+          <th>Type</th>
+          <th>Comment</th>
+          <th>Status</th>
+          <th>Manager</th>
+          <th>Note</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- rows injected by JS -->
+      </tbody>
+    </table>
+  </section>
+
 </body>
 </html>
