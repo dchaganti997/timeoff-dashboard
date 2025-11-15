@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Time-Off Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onload="initDashboard()">
+
+<div class="top-bar">
+    <h2 id="titleLocation">Dashboard</h2>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<div class="filters">
+    <select id="statusFilter">
+        <option value="all">All</option>
+        <option value="Pending">Pending</option>
+        <option value="Approved">Approved</option>
+        <option value="Rejected">Rejected</option>
+    </select>
+
+    <input type="date" id="fromDate">
+    <input type="date" id="toDate">
+    <button onclick="applyFilters()">Filter</button>
+    <button onclick="resetFilters()">Reset</button>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>Name / Email</th>
+            <th>Dates</th>
+            <th>Type</th>
+            <th>Comment</th>
+            <th>Status</th>
+            <th>Manager</th>
+            <th>Note</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
+
+<script src="app.js"></script>
+
+</body>
+</html>
