@@ -1,76 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Sodexo Time-Off Dashboard</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="dashBody" onload="initDashboard()">
+<body onload="initDashboard()">
 
-  <header class="dashHeader">
-    <div class="dashLeft">
-      <div class="logoCircle small">
-        <span class="logoText">S</span>
-      </div>
-      <div>
-        <h1>Time-Off Dashboard</h1>
-        <span id="titleLocation" class="subtitle"></span>
-      </div>
-    </div>
-    <button class="secondaryBtn" onclick="logout()">Logout</button>
-  </header>
+<div class="topbar">
+    <h2 id="title">Time Off Dashboard</h2>
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
 
-  <section class="filtersPanel">
-    <div class="filterItem">
-      <label>Status</label>
-      <select id="statusFilter" onchange="applyFilters()">
+<div class="filters">
+    <select id="statusFilter">
         <option value="all">All</option>
         <option value="Pending">Pending</option>
         <option value="Approved">Approved</option>
         <option value="Rejected">Rejected</option>
-      </select>
-    </div>
+    </select>
 
-    <div class="filterItem">
-      <label>From</label>
-      <input type="date" id="fromDate" onchange="applyFilters()">
-    </div>
+    <input type="date" id="fromDate">
+    <input type="date" id="toDate">
 
-    <div class="filterItem">
-      <label>To</label>
-      <input type="date" id="toDate" onchange="applyFilters()">
-    </div>
+    <button onclick="applyFilters()">Filter</button>
+    <button onclick="resetFilters()">Reset</button>
+</div>
 
-    <div class="filterItem">
-      <label>&nbsp;</label>
-      <div>
-        <button class="primaryBtn small" onclick="applyFilters()">Apply</button>
-        <button class="secondaryBtn small" onclick="resetFilters()">Reset</button>
-      </div>
-    </div>
-  </section>
-
-  <section class="tableWrapper">
-    <table class="requestsTable">
-      <thead>
+<table>
+    <thead>
         <tr>
-          <th>Emp ID</th>
-          <th>Employee</th>
-          <th>Dates</th>
-          <th>Type</th>
-          <th>Comment</th>
-          <th>Status</th>
-          <th>Manager</th>
-          <th>Note</th>
-          <th>Action</th>
+            <th>ID</th>
+            <th>Employee</th>
+            <th>Dates</th>
+            <th>Type</th>
+            <th>Comment</th>
+            <th>Status</th>
+            <th>Manager</th>
+            <th>Note</th>
+            <th>Actions</th>
         </tr>
-      </thead>
-      <tbody id="tableBody">
-        <!-- rows injected by JS -->
-      </tbody>
-    </table>
-  </section>
+    </thead>
+    <tbody id="tableBody"></tbody>
+</table>
 
+<script src="app.js"></script>
 </body>
 </html>
