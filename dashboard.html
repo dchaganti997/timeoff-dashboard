@@ -1,56 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Time-Off Dashboard</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
 </head>
-
-<body>
-
-<div class="topBar">
-    <h2 id="titleLocation">Dashboard</h2>
+<body class="dashBody">
+  <header class="dashHeader">
+    <img src="sodexo_logo.png" class="logoSmall">
+    <h2 id="dashTitle">Dashboard</h2>
     <button class="logoutBtn" onclick="logout()">Logout</button>
-</div>
+  </header>
 
-<div class="filters">
+  <section class="filtersBox">
+    <label>Status:</label>
     <select id="statusFilter">
-        <option value="all">All</option>
-        <option value="Pending">Pending</option>
-        <option value="Approved">Approved</option>
-        <option value="Rejected">Rejected</option>
+      <option value="all">All</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Rejected">Rejected</option>
     </select>
 
+    <label>From:</label>
     <input type="date" id="fromDate">
+
+    <label>To:</label>
     <input type="date" id="toDate">
 
-    <button onclick="applyFilters()">Filter</button>
-    <button onclick="resetFilters()">Reset</button>
-</div>
+    <button class="applyBtn" onclick="applyFilters()">Apply</button>
+    <button class="resetBtn" onclick="resetFilters()">Reset</button>
+  </section>
 
-<div class="tableContainer">
-    <table>
-        <thead>
-        <tr>
-            <th>Employee ID</th>
-            <th>Name / Email</th>
-            <th>Dates</th>
-            <th>Type</th>
-            <th>Comment</th>
-            <th>Status</th>
-            <th>Manager</th>
-            <th>Note</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody id="tableBody"></tbody>
-    </table>
-</div>
-
-<script src="app.js"></script>
-<script>
-    initDashboard();
-</script>
-
+  <table class="styledTable">
+    <thead>
+      <tr>
+        <th>ID</th><th>Name</th><th>Dates</th><th>Type</th>
+        <th>Comment</th><th>Status</th><th>Manager</th><th>Note</th><th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
 </body>
 </html>
