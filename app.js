@@ -4,7 +4,7 @@
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxLbmLTcp6HcV-N8CdGxQ2yI7VhgQiIjf1c0GmvHGLDgKeEQ6klo3P_fr2aciw9DSSW/exec";
 const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2";
 
-// Simple frontend login users
+/* Simple login accounts (username → password + location) */
 const USERS = {
   "c4":  { password: "c4@123",  location: "C4" },
   "app": { password: "app@123", location: "Appalachian" },
@@ -17,28 +17,23 @@ const USERS = {
   LOGIN
 *******************************/
 function login() {
-  const u = document.getElementById("username").value.trim().toLowerCase();
-  const p = document.getElementById("password").value.trim();
+  const u   = document.getElementById("username").value.trim();
+  const p   = document.getElementById("password").value.trim();
   const loc = document.getElementById("location").value;
-  const errEl = document.getElementById("error");
+  const err = document.getElementById("error");
 
-  errEl.textContent = "";
-
-  if (!u || !p || !loc) {
-    errEl.textContent = "Please fill all fields.";
-    return;
-  }
+  err.textContent = "";
 
   if (!USERS[u]) {
-    errEl.textContent = "Invalid username";
+    err.textContent = "Invalid username.";
     return;
   }
   if (USERS[u].password !== p) {
-    errEl.textContent = "Incorrect password";
+    err.textContent = "Incorrect password.";
     return;
   }
   if (USERS[u].location !== loc) {
-    errEl.textContent = "Location mismatch for this user.";
+    err.textContent = "This user is not allowed for that location.";
     return;
   }
 
@@ -49,7 +44,7 @@ function login() {
 }
 
 /*******************************
-  DASHBOARD INITIALIZE
+  DASHBOARD INIT
 *******************************/
 function initDashboard() {
   const u   = localStorage.getItem("user");
@@ -60,92 +55,105 @@ function initDashboard() {
     return;
   }
 
-  const title = document.getElementById("title");
-  title.textContent = `${loc} — Manager (${u})`;
+  document.getElementById("who").textContent  = `${loc} — Manager (${u})`;
+  document.getElementById("pageTitle").textContent = `Time-Off Dashboard – ${loc}`;
 
   loadRows();
 }
 
 /*******************************
-  LOAD ROWS
+  LOAD / FILTER ROWS
 *******************************/
 async function loadRows() {
   const loc = localStorage.getItem("location");
-  const tb  = document.getElementById("tableBody");
+  if (!loc) return;
 
-  tb.innerHTML = `<tr><td colspan="9">Loading…</td></tr>`;
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = `<tr><td colspan="10" class="center">Loading…</td></tr>`;
 
-  const filters = {
-    status: document.getElementById("statusFilter")?.value || "all",
-    from:   document.getElementById("fromDate")?.value || "",
-    to:     document.getElementById("toDate")?.value   || ""
-  };
-
-  const url = `${SCRIPT_URL}?action=getRows` +
-              `&location=${encodeURIComponent(loc)}` +
-              `&token=${API_TOKEN}` +
-              `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+  const filters = {};
+  const url = `${SCRIPT_URL}?action=getRows&location=${encodeURIComponent(loc)}&token=${API_TOKEN}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
 
   try {
-    const res = await fetch(url);
+    const res  = await fetch(url);
     const data = await res.json();
     populateTable(data.rows || []);
-  } catch (err) {
-    tb.innerHTML = `<tr><td colspan="9">Error loading: ${err}</td></tr>`;
+  } catch (e) {
+    alert("Network error while loading rows: " + e);
   }
 }
 
 function applyFilters() {
-  loadRows();
+  const loc = localStorage.getItem("location");
+  if (!loc) return;
+
+  const filters = {
+    status: document.getElementById("statusFilter").value,
+    from:   document.getElementById("fromDate").value,
+    to:     document.getElementById("toDate").value
+  };
+
+  const url = `${SCRIPT_URL}?action=getRows&location=${encodeURIComponent(loc)}&token=${API_TOKEN}&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = `<tr><td colspan="10" class="center">Filtering…</td></tr>`;
+
+  fetch(url)
+    .then(r => r.json())
+    .then(d => populateTable(d.rows || []))
+    .catch(err => alert("Network error while filtering: " + err));
 }
 
 function resetFilters() {
   document.getElementById("statusFilter").value = "all";
-  document.getElementById("fromDate").value = "";
-  document.getElementById("toDate").value = "";
+  document.getElementById("fromDate").value     = "";
+  document.getElementById("toDate").value       = "";
   loadRows();
 }
 
 /*******************************
   TABLE RENDER
 *******************************/
-function populateTable(rows) {
-  const tb = document.getElementById("tableBody");
-  tb.innerHTML = "";
+function fmtDate(d) {
+  if (!d) return "";
+  const dt = new Date(d);
+  if (isNaN(dt.getTime())) return d;
+  return dt.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+}
 
-  if (!rows || !rows.length) {
-    tb.innerHTML = `<tr><td colspan="9">No records found.</td></tr>`;
+function populateTable(rows) {
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+
+  if (!rows.length) {
+    tbody.innerHTML = `<tr><td colspan="10" class="center">No matching requests.</td></tr>`;
     return;
   }
 
   rows.forEach(r => {
     const tr = document.createElement("tr");
-
-    const dates = `${new Date(r.startDate).toDateString()} → ${new Date(r.endDate).toDateString()}`;
-    const statusClass = (r.status || "").toLowerCase();
+    const dates = `${fmtDate(r.startDate)} → ${fmtDate(r.endDate || r.startDate)}`;
 
     tr.innerHTML = `
       <td>${r.employeeId || ""}</td>
       <td>
-        ${r.name || ""}
-        <br><span class="small">${r.employeeEmail || ""}</span>
+        <div class="emp-name">${r.name || ""}</div>
+        <div class="emp-mail">${r.employeeEmail || ""}</div>
       </td>
       <td>${dates}</td>
       <td>${r.type || ""}</td>
       <td>${r.comment || ""}</td>
-      <td>
-        <span class="badge badge-${statusClass}">${r.status || "Pending"}</span>
-      </td>
+      <td><span class="status-badge ${String(r.status || "Pending").toLowerCase()}">${r.status || "Pending"}</span></td>
       <td>${r.manager || ""}</td>
       <td>
-        <textarea id="note_${r.requestId}" class="note-box" rows="1">${r.managerNote || ""}</textarea>
+        <textarea id="note_${r.requestId}" rows="1" class="note-input">${r.managerNote || ""}</textarea>
       </td>
-      <td>
-        <button class="btn btn-approve" onclick="updateStatus('${r.requestId}','Approved')">Approve</button>
-        <button class="btn btn-reject" onclick="updateStatus('${r.requestId}','Rejected')">Reject</button>
+      <td class="actions">
+        <button class="btn approve" onclick="updateStatus('${r.requestId}','Approved')">Approve</button>
+        <button class="btn reject"  onclick="updateStatus('${r.requestId}','Rejected')">Reject</button>
       </td>
     `;
-    tb.appendChild(tr);
+    tbody.appendChild(tr);
   });
 }
 
@@ -155,35 +163,43 @@ function populateTable(rows) {
 function updateStatus(requestId, status) {
   const loc  = localStorage.getItem("location");
   const user = localStorage.getItem("user");
-  const note = document.getElementById(`note_${requestId}`).value || "";
+  if (!loc || !user) {
+    alert("Session expired – please log in again.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  const noteEl = document.getElementById(`note_${requestId}`);
+  const note   = noteEl ? noteEl.value : "";
 
   const payload = {
     action: "setDecision",
     location: loc,
-    managerUsername: user,
     decisions: [{
       requestId,
       status,
       managerNote: note
-    }]
+    }],
+    managerUsername: user
   };
 
+  // IMPORTANT: use text/plain to avoid CORS preflight (this fixed your “Failed to fetch”)
   fetch(`${SCRIPT_URL}?token=${API_TOKEN}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(payload)
   })
     .then(r => r.json())
-    .then(d => {
-      if (d.error) {
-        alert("Error: " + d.error);
+    .then(resp => {
+      if (resp.error) {
+        alert("Backend error: " + resp.error);
       } else {
         alert("Updated successfully!");
         loadRows();
       }
     })
     .catch(err => {
-      alert("Network error: " + err);
+      alert("Network error while updating: " + err);
     });
 }
 

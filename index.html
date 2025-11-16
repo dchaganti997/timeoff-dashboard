@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Sodexo Time-Off Login</title>
-  <link rel="stylesheet" href="styles.css">
-  <script defer src="app.js"></script>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="page page-login">
-  <div class="card login-card">
-    <div class="login-header">
-      <div class="logo-circle">
-        <span class="logo-text">S</span>
-      </div>
-      <div>
-        <h2>Sodexo Time-Off Admin</h2>
-        <p>Manager Login</p>
-      </div>
+<body class="auth-body">
+
+  <div class="card auth-card">
+    <h1 class="app-title">Sodexo Time-Off Dashboard</h1>
+    <p class="subtitle">Manager login</p>
+
+    <div class="field">
+      <label for="location">Location</label>
+      <select id="location">
+        <option value="C4">C4</option>
+        <option value="Appalachian">Appalachian</option>
+        <option value="CIW">CIW</option>
+        <option value="Hinman">Hinman</option>
+        <option value="Library">Library</option>
+      </select>
     </div>
 
-    <label for="username">Username</label>
-    <input id="username" class="input" placeholder="e.g. c4">
+    <div class="field">
+      <label for="username">User ID</label>
+      <input id="username" type="text" placeholder="e.g., c4" />
+    </div>
 
-    <label for="location">Location</label>
-    <select id="location" class="input">
-      <option value="C4">C4</option>
-      <option value="Appalachian">Appalachian</option>
-      <option value="CIW">CIW</option>
-      <option value="Hinman">Hinman</option>
-      <option value="Library">Library</option>
-    </select>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="********" />
+    </div>
 
-    <label for="password">Password</label>
-    <input id="password" type="password" class="input" placeholder="Password">
+    <div id="error" class="error-text"></div>
 
-    <button class="btn btn-primary" onclick="login()">Login</button>
+    <button class="btn primary full" onclick="login()">Login</button>
 
-    <p id="error" class="error"></p>
+    <div class="hint">
+      Demo logins: <code>c4/c4@123</code>, <code>app/app@123</code>, etc.
+    </div>
   </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
