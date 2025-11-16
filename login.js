@@ -1,79 +1,35 @@
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxMlRApNGSoiZ-HuNAtrpoEPduBdcStUwdFmjDAf2P0CUBuW2E5ESQ2Bori9y6u9JK_/exec";
-const API_TOKEN  = "DCHAGANTI_TIMEOFF_9A83B7X2";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sodexo Time-Off Login</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="login.js"></script>
+</head>
+<body class="loginBody">
+  <div class="loginCard">
+    <div class="loginHeader">
+      <div class="logoCircle"><span class="logoText">S</span></div>
+      <div>
+        <h2>Sodexo Time-Off Portal</h2>
+        <p>Binghamton Dining — Manager Login</p>
+      </div>
+    </div>
 
-// get dropdown element
-const ALL_LOCATIONS = [
-  "C4","Appalachian","CIW","Hinman","Food Trucks","Einstein",
-  "Library","Dunkin","Market Place","Health Sciences","Starbucks","Garbanzos"
-];
+    <label>Username</label>
+    <input id="username" class="inputBox" placeholder="e.g. c4_manager" oninput="onUsernameChange()">
 
-function onUsernameChange() {
-  const u = (document.getElementById('username').value||'').trim().toLowerCase();
-  const locSelect = document.getElementById('location');
-  locSelect.disabled = true;
-  locSelect.innerHTML = "<option>Select username first</option>";
+    <label>Location</label>
+    <select id="location" class="inputBox" disabled>
+      <option>Select username first</option>
+    </select>
 
-  if (!u) return;
+    <label>Password</label>
+    <input id="password" type="password" class="inputBox" placeholder="Password">
 
-  // fetch manager login info from backend
-  const url = `${SCRIPT_URL}?token=${API_TOKEN}&action=getManagerInfo&username=${encodeURIComponent(u)}`;
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      if (data.error) {
-        locSelect.innerHTML = `<option>${data.error}</option>`;
-      } else {
-        const allowed = data.locations || [];
-        locSelect.innerHTML = "";
-        if (allowed.includes("all")) {
-          ALL_LOCATIONS.forEach(loc => {
-            locSelect.innerHTML += `<option value="${loc}">${loc}</option>`;
-          });
-        } else {
-          allowed.forEach(loc => {
-            locSelect.innerHTML += `<option value="${loc}">${loc}</option>`;
-          });
-        }
-        locSelect.disabled = false;
-      }
-    })
-    .catch(err => {
-      locSelect.innerHTML = "<option>Error loading</option>";
-    });
-}
+    <button onclick="login()" class="primaryBtn">Login</button>
 
-function login() {
-  const u = (document.getElementById('username').value||'').trim().toLowerCase();
-  const p = (document.getElementById('password').value||'');
-  const loc = document.getElementById('location').value;
-
-  const errEl = document.getElementById('loginError');
-  errEl.textContent = "";
-
-  if (!u || !p || !loc) {
-    errEl.textContent = "All fields are required.";
-    return;
-  }
-
-  const payload = { username: u, password: p, location: loc };
-
-  fetch(`${SCRIPT_URL}?token=${API_TOKEN}&action=login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload)
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error) {
-      errEl.textContent = data.error;
-    } else {
-      localStorage.setItem("sessionToken", data.token);
-      localStorage.setItem("managerUser", u);
-      localStorage.setItem("managerLocation", loc);
-      window.location.href = "dashboard.html";
-    }
-  })
-  .catch(err => {
-    errEl.textContent = "Network error: "+err;
-  });
-}
+    <p id="loginError" class="errorMsg"></p>
+  </div>
+</body>
+</html>
