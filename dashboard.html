@@ -1,50 +1,55 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Time-Off Dashboard</title>
   <link rel="stylesheet" href="styles.css">
   <script defer src="app.js"></script>
 </head>
-<body class="dashBody" onload="initDashboard()">
+<body class="page page-dashboard" onload="initDashboard()">
 
-  <header class="dashHeader">
-    <div class="dashLeft">
-      <div class="logoCircle small"><span class="logoText">S</span></div>
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo-circle small">
+        <span class="logo-text">S</span>
+      </div>
       <div>
         <h1>Time-Off Dashboard</h1>
-        <span id="title" class="subtitle"></span>
+        <p id="title" class="subtitle"></p>
       </div>
     </div>
-    <button class="secondaryBtn" onclick="logout()">Logout</button>
+    <button class="btn btn-secondary" onclick="logout()">Logout</button>
   </header>
 
-  <section class="filtersPanel">
-    <div class="filterItem">
+  <section class="filters">
+    <div class="filter-item">
       <label>Status</label>
-      <select id="statusFilter" onchange="applyFilters()">
+      <select id="statusFilter" class="input" onchange="applyFilters()">
         <option value="all">All</option>
         <option value="Pending">Pending</option>
         <option value="Approved">Approved</option>
         <option value="Rejected">Rejected</option>
       </select>
     </div>
-    <div class="filterItem">
+    <div class="filter-item">
       <label>From</label>
-      <input type="date" id="fromDate" onchange="applyFilters()">
+      <input id="fromDate" type="date" class="input" onchange="applyFilters()">
     </div>
-    <div class="filterItem">
+    <div class="filter-item">
       <label>To</label>
-      <input type="date" id="toDate" onchange="applyFilters()">
+      <input id="toDate" type="date" class="input" onchange="applyFilters()">
     </div>
-    <div class="filterItem">
+    <div class="filter-item">
       <label>&nbsp;</label>
-      <button class="secondaryBtn small" onclick="resetFilters()">Reset</button>
+      <div>
+        <button class="btn btn-primary btn-sm" onclick="applyFilters()">Apply</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetFilters()">Reset</button>
+      </div>
     </div>
   </section>
 
-  <section class="tableWrapper">
-    <table class="requestsTable">
+  <section class="table-section">
+    <table class="table">
       <thead>
         <tr>
           <th>Emp ID</th>
@@ -54,7 +59,7 @@
           <th>Comment</th>
           <th>Status</th>
           <th>Manager</th>
-          <th>Note</th>
+          <th>Manager Note</th>
           <th>Action</th>
         </tr>
       </thead>
