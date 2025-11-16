@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Time-Off Dashboard</title>
   <link rel="stylesheet" href="styles.css">
-  <script defer src="dashboard.js"></script>
+  <script defer src="app.js"></script>
 </head>
 <body class="dashBody" onload="initDashboard()">
 
@@ -13,7 +13,7 @@
       <div class="logoCircle small"><span class="logoText">S</span></div>
       <div>
         <h1>Time-Off Dashboard</h1>
-        <span id="titleLocation" class="subtitle"></span>
+        <span id="title" class="subtitle"></span>
       </div>
     </div>
     <button class="secondaryBtn" onclick="logout()">Logout</button>
@@ -39,10 +39,7 @@
     </div>
     <div class="filterItem">
       <label>&nbsp;</label>
-      <div>
-        <button class="primaryBtn small" onclick="applyFilters()">Apply</button>
-        <button class="secondaryBtn small" onclick="resetFilters()">Reset</button>
-      </div>
+      <button class="secondaryBtn small" onclick="resetFilters()">Reset</button>
     </div>
   </section>
 
